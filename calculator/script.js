@@ -2,6 +2,8 @@ class Calculator {
     constructor() {
         this.previousOperandElement = document.getElementById('previous-operand');
         this.currentOperandElement = document.getElementById('current-operand');
+        this.isScientific = false;
+        this.isRadians = false;
         this.clear();
     }
 
@@ -71,10 +73,108 @@ class Calculator {
                 return;
         }
 
-        this.currentOperand = Math.round(computation * 1000000) / 1000000;
+        this.currentOperand = this.formatResult(computation);
         this.operation = undefined;
         this.previousOperand = '';
         this.updateDisplay();
+    }
+
+    sin() {
+        const value = this.isRadians ? parseFloat(this.currentOperand) : (parseFloat(this.currentOperand) * Math.PI / 180);
+        this.currentOperand = this.formatResult(Math.sin(value));
+        this.updateDisplay();
+    }
+
+    cos() {
+        const value = this.isRadians ? parseFloat(this.currentOperand) : (parseFloat(this.currentOperand) * Math.PI / 180);
+        this.currentOperand = this.formatResult(Math.cos(value));
+        this.updateDisplay();
+    }
+
+    tan() {
+        const value = this.isRadians ? parseFloat(this.currentOperand) : (parseFloat(this.currentOperand) * Math.PI / 180);
+        this.currentOperand = this.formatResult(Math.tan(value));
+        this.updateDisplay();
+    }
+
+    log() {
+        const value = parseFloat(this.currentOperand);
+        if (value <= 0) {
+            alert("Cannot calculate logarithm of zero or negative numbers!");
+            return;
+        }
+        this.currentOperand = this.formatResult(Math.log10(value));
+        this.updateDisplay();
+    }
+
+    ln() {
+        const value = parseFloat(this.currentOperand);
+        if (value <= 0) {
+            alert("Cannot calculate natural logarithm of zero or negative numbers!");
+            return;
+        }
+        this.currentOperand = this.formatResult(Math.log(value));
+        this.updateDisplay();
+    }
+
+    sqrt() {
+        const value = parseFloat(this.currentOperand);
+        if (value < 0) {
+            alert("Cannot calculate square root of negative numbers!");
+            return;
+        }
+        this.currentOperand = this.formatResult(Math.sqrt(value));
+        this.updateDisplay();
+    }
+
+    pow() {
+        const value = parseFloat(this.currentOperand);
+        this.currentOperand = this.formatResult(Math.pow(value, 2));
+        this.updateDisplay();
+    }
+
+    pi() {
+        this.currentOperand = Math.PI.toString();
+        this.updateDisplay();
+    }
+
+    e() {
+        this.currentOperand = Math.E.toString();
+        this.updateDisplay();
+    }
+
+    fact() {
+        const num = parseInt(this.currentOperand);
+        if (num < 0) {
+            alert("Cannot calculate factorial of negative numbers!");
+            return;
+        }
+        if (num > 170) {
+            alert("Number too large for factorial calculation!");
+            return;
+        }
+        let result = 1;
+        for (let i = 2; i <= num; i++) result *= i;
+        this.currentOperand = this.formatResult(result);
+        this.updateDisplay();
+    }
+
+    exp() {
+        this.currentOperand += 'e+';
+        this.updateDisplay();
+    }
+
+    toggleRad() {
+        this.isRadians = !this.isRadians;
+        const radButton = document.querySelector('[data-scientific="rad"]');
+        radButton.textContent = this.isRadians ? 'DEG' : 'RAD';
+    }
+
+    formatResult(number) {
+        if (number > 1e16 || number < -1e16) {
+            return number.toExponential(10);
+        }
+        return Math.round(number * 1e10) / 1e10;
     }
 
     updateDisplay() {
@@ -110,7 +210,7 @@ class Calculator {
 // Initialize calculator
 const calculator = new Calculator();
 
-// Add event listeners
+// Add event listeners for basic operations
 document.querySelectorAll('[data-number]').forEach(button => {
     button.addEventListener('click', () => {
         calculator.appendNumber(button.textContent);
@@ -159,4 +259,59 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         calculator.clear();
     }
+});
+
+// Add scientific mode toggle
+const modeToggle = document.querySelector('.mode-toggle');
+const calculatorElement = document.querySelector('.calculator');
+
+modeToggle.addEventListener('click', () => {
+    calculator.isScientific = !calculator.isScientific;
+    calculatorElement.classList.toggle('scientific');
+    modeToggle.textContent = calculator.isScientific ? 'Switch to Basic' : 'Switch to Scientific';
+});
+
+// Add scientific button listeners
+document.querySelectorAll('[data-scientific]').forEach(button => {
+    button.addEventListener('click', () => {
+        const operation = button.getAttribute('data-scientific');
+        switch (operation) {
+            case 'sin':
+                calculator.sin();
+                break;
+            case 'cos':
+                calculator.cos();
+                break;
+            case 'tan':
+                calculator.tan();
+                break;
+            case 'log':
+                calculator.log();
+                break;
+            case 'ln':
+                calculator.ln();
+                break;
+            case 'sqrt':
+                calculator.sqrt();
+                break;
+            case 'pow':
+                calculator.pow();
+                break;
+            case 'pi':
+                calculator.pi();
+                break;
+            case 'e':
+                calculator.e();
+                break;
+            case 'fact':
+                calculator.fact();
+                break;
+            case 'exp':
+                calculator.exp();
+                break;
+            case 'rad':
+                calculator.toggleRad();
+                break;
+        }
+    });
 });

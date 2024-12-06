@@ -57,6 +57,49 @@
             border-radius: 25px;
             background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease-in-out;
+        }
+
+        .calculator.scientific {
+            width: 580px;
+        }
+
+        .mode-toggle {
+            position: absolute;
+            top: -50px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .mode-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .scientific-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+            opacity: 0;
+            height: 0;
+            transition: all 0.5s ease-in-out;
+            overflow: hidden;
+        }
+
+        .calculator.scientific .scientific-buttons {
+            opacity: 1;
+            height: auto;
+        }
+
+        .scientific-btn {
+            background: #6c5ce7;
+            color: white;
         }
 
         .display {
@@ -237,6 +280,7 @@
 <body>
     <div class="particles"></div>
     <div class="calculator-container">
+        <div class="mode-toggle">Switch to Scientific</div>
         <div class="calculator">
             <div class="display">
                 <div id="previous-operand"></div>
@@ -261,6 +305,20 @@
                 <button data-number>0</button>
                 <button data-number>.</button>
                 <button class="equals span-two" data-action="calculate">=</button>
+            </div>
+            <div class="scientific-buttons">
+                <button class="scientific-btn" data-scientific="sin">sin</button>
+                <button class="scientific-btn" data-scientific="cos">cos</button>
+                <button class="scientific-btn" data-scientific="tan">tan</button>
+                <button class="scientific-btn" data-scientific="log">log</button>
+                <button class="scientific-btn" data-scientific="ln">ln</button>
+                <button class="scientific-btn" data-scientific="sqrt">√</button>
+                <button class="scientific-btn" data-scientific="pow">x²</button>
+                <button class="scientific-btn" data-scientific="pi">π</button>
+                <button class="scientific-btn" data-scientific="e">e</button>
+                <button class="scientific-btn" data-scientific="fact">x!</button>
+                <button class="scientific-btn" data-scientific="exp">EXP</button>
+                <button class="scientific-btn" data-scientific="rad">RAD</button>
             </div>
         </div>
     </div>
