@@ -21,6 +21,23 @@
             --text: #2d3436;
             --white: #ffffff;
             --shadow: rgba(0, 0, 0, 0.1);
+            --calculator-bg: rgba(255, 255, 255, 0.9);
+            --display-bg: rgba(255, 255, 255, 0.95);
+            --button-bg: var(--white);
+            --transition: all 0.3s ease;
+        }
+
+        :root[data-theme="dark"] {
+            --primary: #dfe6e9;
+            --secondary: #b2bec3;
+            --accent: #00b894;
+            --background: #2d3436;
+            --text: #dfe6e9;
+            --white: #2d3436;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --calculator-bg: rgba(45, 52, 54, 0.9);
+            --display-bg: rgba(45, 52, 54, 0.95);
+            --button-bg: #353b48;
         }
 
         body {
@@ -30,6 +47,11 @@
             min-height: 100vh;
             background: radial-gradient(circle at top right, #a8e6cf 0%, #dcedc1 25%, #ffd3b6 50%, #ffaaa5 75%, #ff8b94 100%);
             overflow: hidden;
+            transition: var(--transition);
+        }
+
+        :root[data-theme="dark"] body {
+            background: radial-gradient(circle at top right, #2d3436 0%, #2d3436 25%, #353b48 50%, #2d3436 75%, #2d3436 100%);
         }
 
         .calculator-container {
@@ -55,28 +77,37 @@
             width: 380px;
             padding: 25px;
             border-radius: 25px;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.5s ease-in-out;
+            background: var(--calculator-bg);
+            box-shadow: 0 10px 30px var(--shadow);
+            transition: var(--transition);
         }
 
         .calculator.scientific {
             width: 580px;
         }
 
-        .mode-toggle {
+        .mode-toggle, .theme-toggle {
             position: absolute;
-            top: -50px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.9);
+            background: var(--calculator-bg);
             padding: 10px 20px;
             border-radius: 20px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: var(--transition);
+            color: var(--text);
         }
 
-        .mode-toggle:hover {
+        .mode-toggle {
+            top: -50px;
+            right: 20px;
+        }
+
+        .theme-toggle {
+            top: -50px;
+            left: 20px;
+        }
+
+        .mode-toggle:hover, .theme-toggle:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
@@ -104,7 +135,7 @@
 
         .display {
             position: relative;
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--display-bg);
             padding: 30px;
             border-radius: 20px;
             margin-bottom: 30px;
@@ -112,6 +143,7 @@
                 inset 0 2px 5px rgba(0, 0, 0, 0.1),
                 0 5px 15px rgba(0, 0, 0, 0.05);
             overflow: hidden;
+            color: var(--text);
         }
 
         .display::before {
@@ -163,13 +195,13 @@
             font-size: 1.5rem;
             border: none;
             border-radius: 15px;
-            background: var(--white);
+            background: var(--button-bg);
             color: var(--text);
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: var(--transition);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 15px var(--shadow);
             font-weight: 500;
         }
 
@@ -280,7 +312,8 @@
 <body>
     <div class="particles"></div>
     <div class="calculator-container">
-        <div class="mode-toggle">Switch to Scientific</div>
+        <div class="theme-toggle">Dark Mode</div>
+        <div class="mode-toggle">Scientific</div>
         <div class="calculator">
             <div class="display">
                 <div id="previous-operand"></div>
@@ -361,6 +394,12 @@
                     this.style.transform = '';
                 }, 100);
             });
+        });
+
+        // Add theme toggle functionality
+        const themeToggle = document.querySelector('.theme-toggle');
+        themeToggle.addEventListener('click', function() {
+            document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark');
         });
     </script>
 </body>

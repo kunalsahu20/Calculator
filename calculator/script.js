@@ -268,7 +268,16 @@ const calculatorElement = document.querySelector('.calculator');
 modeToggle.addEventListener('click', () => {
     calculator.isScientific = !calculator.isScientific;
     calculatorElement.classList.toggle('scientific');
-    modeToggle.textContent = calculator.isScientific ? 'Switch to Basic' : 'Switch to Scientific';
+    modeToggle.textContent = calculator.isScientific ? 'Basic' : 'Scientific';
+});
+
+// Add theme toggle
+const themeToggle = document.querySelector('.theme-toggle');
+themeToggle.addEventListener('click', () => {
+    const root = document.documentElement;
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', isDark ? '' : 'dark');
+    themeToggle.textContent = isDark ? 'Dark Mode' : 'Light Mode';
 });
 
 // Add scientific button listeners
