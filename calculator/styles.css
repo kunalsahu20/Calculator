@@ -1,0 +1,301 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+:root {
+    --primary: #2d3436;
+    --secondary: #636e72;
+    --accent: #00b894;
+    --background: #dfe6e9;
+    --text: #2d3436;
+    --white: #ffffff;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --calculator-bg: rgba(255, 255, 255, 0.9);
+    --display-bg: rgba(255, 255, 255, 0.95);
+    --button-bg: var(--white);
+    --transition: all 0.3s ease;
+}
+
+:root[data-theme="dark"] {
+    --primary: #dfe6e9;
+    --secondary: #b2bec3;
+    --accent: #00b894;
+    --background: #2d3436;
+    --text: #dfe6e9;
+    --white: #2d3436;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --calculator-bg: rgba(45, 52, 54, 0.9);
+    --display-bg: rgba(45, 52, 54, 0.95);
+    --button-bg: #353b48;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: radial-gradient(circle at top right, #a8e6cf 0%, #dcedc1 25%, #ffd3b6 50%, #ffaaa5 75%, #ff8b94 100%);
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+:root[data-theme="dark"] body {
+    background: radial-gradient(circle at top right, #2d3436 0%, #2d3436 25%, #353b48 50%, #2d3436 75%, #2d3436 100%);
+}
+
+.calculator-container {
+    position: relative;
+    padding: 20px;
+    border-radius: 30px;
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 25px 45px rgba(0, 0, 0, 0.2),
+        inset 0 0 15px rgba(255, 255, 255, 0.2),
+        inset 0 0 35px rgba(255, 255, 255, 0.1);
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.02); }
+}
+
+.calculator {
+    width: 380px;
+    padding: 25px;
+    border-radius: 25px;
+    background: var(--calculator-bg);
+    box-shadow: 0 10px 30px var(--shadow);
+    transition: var(--transition);
+}
+
+.calculator.scientific {
+    width: 580px;
+}
+
+.mode-toggle, .theme-toggle {
+    position: absolute;
+    background: var(--calculator-bg);
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px var(--shadow);
+    transition: var(--transition);
+    color: var(--text);
+}
+
+.mode-toggle {
+    top: -50px;
+    right: 20px;
+}
+
+.theme-toggle {
+    top: -50px;
+    left: 20px;
+}
+
+.mode-toggle:hover, .theme-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.scientific-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+    opacity: 0;
+    height: 0;
+    transition: all 0.5s ease-in-out;
+    overflow: hidden;
+}
+
+.calculator.scientific .scientific-buttons {
+    opacity: 1;
+    height: auto;
+}
+
+.display {
+    position: relative;
+    background: var(--display-bg);
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    box-shadow: 
+        inset 0 2px 5px rgba(0, 0, 0, 0.1),
+        0 5px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    color: var(--text);
+}
+
+.display::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shine 2s infinite;
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+#previous-operand {
+    min-height: 30px;
+    font-size: 1.2rem;
+    color: var(--secondary);
+    margin-bottom: 10px;
+    text-align: right;
+    opacity: 0.7;
+    transition: var(--transition);
+}
+
+#current-operand {
+    font-size: 3rem;
+    color: var(--text);
+    text-align: right;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: var(--transition);
+    min-height: 70px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+button {
+    padding: 20px;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 15px;
+    background: var(--button-bg);
+    color: var(--text);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px var(--shadow);
+    font-weight: 500;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+button:hover::before {
+    width: 300%;
+    height: 300%;
+}
+
+button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.span-two {
+    grid-column: span 2;
+}
+
+.operator {
+    background: #6c5ce7;
+    color: white;
+}
+
+.scientific-btn {
+    background: #6c5ce7;
+    color: white;
+}
+
+.equals {
+    background: #00b894;
+    color: white;
+}
+
+.clear {
+    background: #ff7675;
+    color: white;
+}
+
+.delete {
+    background: #fab1a0;
+    color: var(--text);
+}
+
+/* Floating particles animation */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: moveParticle 15s infinite linear;
+}
+
+@keyframes moveParticle {
+    0% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translate(var(--move-x), var(--move-y));
+        opacity: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .calculator {
+        width: 100%;
+        max-width: 350px;
+        padding: 15px;
+    }
+
+    button {
+        padding: 15px;
+        font-size: 1.2rem;
+    }
+
+    #current-operand {
+        font-size: 2.5rem;
+    }
+}

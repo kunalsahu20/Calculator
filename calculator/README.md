@@ -10,7 +10,6 @@
 
 ### 🌈 A stunning calculator with glass-morphism design and fluid animations
 
-
 </div>
 
 ---
@@ -133,6 +132,54 @@ open index.html
 - Backspace for delete
 - Escape for clear
 
+## Calculator
+
+A beautiful and functional calculator with scientific mode and theme switching.
+
+### Features
+
+- Basic arithmetic operations
+- Scientific calculator functions:
+  - Trigonometric functions (sin, cos, tan)
+  - Logarithmic functions (log, ln)
+  - Constants (π, e)
+  - Power functions (x², √)
+  - Factorial and scientific notation
+  - RAD/DEG mode toggle
+- Theme switching:
+  - Light/Dark mode with smooth transitions
+  - Consistent styling across modes
+- Modern UI:
+  - Glassmorphic design
+  - Smooth animations
+  - Responsive layout
+  - Floating particle effects
+- Keyboard support for basic operations
+
+### Usage
+
+1. Basic Mode:
+   - Use numbers and basic operators (+, -, ×, ÷)
+   - Clear with 'AC', delete last digit with 'D'
+   - Calculate with '='
+
+2. Scientific Mode:
+   - Click 'Scientific' to toggle scientific functions
+   - Access advanced mathematical operations
+   - Switch between RAD/DEG for trigonometric functions
+
+3. Theme:
+   - Click 'Dark Mode' or 'Light Mode' to switch themes
+   - Enjoy smooth transitions between themes
+
+### Keyboard Shortcuts
+
+- Numbers: 0-9
+- Operators: +, -, *, /
+- Equals: Enter or =
+- Clear: Escape
+- Delete: Backspace
+
 ## 🎨 Customization
 
 ### Color Themes
@@ -186,4 +233,3 @@ open index.html
 Built with ❤️ by [Kunal](https://github.com/kunalsahu20)
 
 </div>
-
